@@ -1,13 +1,12 @@
 <?php
 
 use App\Http\Controllers\Auth\PasswordController;
-use App\Http\Controllers\Be\BooksController;
+use App\Http\Controllers\Be\AddressController;
 use App\Http\Controllers\Global\GlobalSettingController;
 use App\Http\Controllers\Global\PermissionController;
 use App\Http\Controllers\Global\ProfileController;
 use App\Http\Controllers\Global\RoleController;
 use App\Http\Controllers\Global\UserController;
-use App\Http\Controllers\AddressController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -88,29 +87,18 @@ Route::group([
             'prefix' => '/be',
         ], function () {
             Route::group([
-                'as' => 'books.',
-                'prefix' => 'books'
+                'as' => 'address.',
+                'prefix' => 'address'
             ], function () {
-                Route::get('/list', [BooksController::class, 'list'])->name('list');
-                Route::get('/create', [BooksController::class, 'create'])->name('create');
-                Route::get('/edit/{id}', [BooksController::class, 'edit'])->name('edit');
-                Route::patch('/storeUpdate/{id?}', [BooksController::class, 'storeUpdate'])->name('storeUpdate');
-                Route::get('/remove/{id}', [BooksController::class, 'remove'])->name('remove');
+                Route::get('/list', [AddressController::class, 'list'])->name('list');
+                Route::get('/create', [AddressController::class, 'create'])->name('create');
+                Route::get('/edit/{id}', [AddressController::class, 'edit'])->name('edit');
+                Route::patch('/storeUpdate/{id?}', [AddressController::class, 'storeUpdate'])->name('storeUpdate');
+                Route::get('/remove/{id}', [AddressController::class, 'remove'])->name('remove');
 
 
             });
 
-              // Addresses Routes
-    Route::group([
-        'as' => 'addresses.',
-        'prefix' => 'addresses'
-    ], function () {
-        Route::get('/list', [AddressController::class, 'list'])->name('list');
-        Route::get('/create', [AddressController::class, 'create'])->name('create');
-        Route::get('/edit/{id}', [AddressController::class, 'edit'])->name('edit');
-        Route::patch('/storeUpdate/{id?}', [AddressController::class, 'storeUpdate'])->name('storeUpdate');
-        Route::get('/remove/{id}', [AddressController::class, 'remove'])->name('remove');
-    });
         });
     });
 });

@@ -10,6 +10,7 @@ import {XCircleIcon} from "@heroicons/react/20/solid/index.js";
 export default function Form({auth, pageTitle, pageDescription, pageData, formUrl}) {
     const {data, setData, patch, processing, errors, reset} = useForm({
         title       : pageData ? pageData.title : '',
+        contact_no       : pageData ? pageData.contact_no : '',
         contact_name: pageData ? pageData.contact_name : '',
         contact_number: pageData ? pageData.contact_number : '',
         address_line_1: pageData ? pageData.address_line_1 : '',
@@ -25,7 +26,7 @@ export default function Form({auth, pageTitle, pageDescription, pageData, formUr
 
     useEffect(() => {
         return () => {
-            reset('title', 'contact_name', 'contact_number', 'address_line_1', 'address_line_2', 'address_line_3', 'pincode', 'city', 'state', 'country', 'is_default_from', 'is_default_to');
+            reset('title', 'contact_no', 'contact_name', 'contact_number', 'address_line_1', 'address_line_2', 'address_line_3', 'pincode', 'city', 'state', 'country', 'is_default_from', 'is_default_to');
         };
     }, []);
 
@@ -89,6 +90,18 @@ export default function Form({auth, pageTitle, pageDescription, pageData, formUr
                                 onChange={(e) => setData('contact_number', e.target.value)}
                             />
                             <InputError message={errors.contact_number} />
+                        </div>
+                        <div>
+                            <InputLabel htmlFor="contact_no" value="Contact no" />
+                            <TextInput
+                                id="contact_no"
+                                name="contact_no"
+                                type="text"
+                                placeholder="Enter contact no"
+                                value={data.contact_no}
+                                onChange={(e) => setData('contact_no', e.target.value)}
+                            />
+                            <InputError message={errors.contact_no} />
                         </div>
 
                         {/* Address Line 1 */}
@@ -215,7 +228,7 @@ export default function Form({auth, pageTitle, pageDescription, pageData, formUr
                     </div>
 
                     <div className="flex items-center justify-end align-middle gap-2 pt-3 border-t">
-                        <Link href={route('dashboard.be.books.list')} className="inline-flex items-center gap-x-1.5 rounded-md bg-gray-600 px-2.5 py-1.5 text-sm font-semibold text-white shadow-sm hover:bg-gray-500">
+                        <Link href={route('dashboard.be.address.list')} className="inline-flex items-center gap-x-1.5 rounded-md bg-gray-600 px-2.5 py-1.5 text-sm font-semibold text-white shadow-sm hover:bg-gray-500">
                             <XCircleIcon className="-mr-0.5 h-5 w-5" aria-hidden="true" />
                             Cancel
                         </Link>
