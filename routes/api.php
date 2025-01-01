@@ -29,10 +29,10 @@ Route::group([
     Route::get('/users', [ApiController::class, 'users'])->name('users');
     Route::get('/permissions', [ApiController::class, 'permissions'])->name('permissions');
     Route::get('/roles', [ApiController::class, 'roles'])->name('roles');
-    Route::get('/books', [ApiController::class, 'books'])->name('addresses');
+    Route::get('/addresses', [ApiController::class, 'addresses'])->name('addresses');
     Route::get('/bookReviews', [ApiController::class, 'bookReviews'])->name('bookReviews');
 });
-
+    
 Route::group([
     'as' => 'client.',
     'prefix' => 'client'

@@ -3,14 +3,14 @@ import { Head, Link } from '@inertiajs/react';
 import DataTable from "@/Components/DataTable.jsx";
 import { PlusCircleIcon } from "@heroicons/react/20/solid";
 
-export default function List({ auth, pageTitle, pageDescription, books }) {
-    console.log("Books data: ", books);  // Log the received data
+export default function List({ auth, pageTitle, pageDescription, address }) {
+    console.log("Adress data: ", address);  // Log the received data
 
     const actionUrls = {
-        createEditRouteName: 'dashboard.be.books.create',
-        removeALlRouteName: 'dashboard.be.books.removeAll',
-        removeRouteName: 'dashboard.be.books.remove',
-        editRouteName: 'dashboard.be.books.edit'
+        createEditRouteName: 'dashboard.be.address.create',
+        removeALlRouteName: 'dashboard.be.address.removeAll',
+        removeRouteName: 'dashboard.be.address.remove',
+        editRouteName: 'dashboard.be.address.edit'
     };
 
     return (
@@ -42,12 +42,11 @@ export default function List({ auth, pageTitle, pageDescription, books }) {
     excludedColumns={['id']}
     fetchUrl={route('fetch.addresses')}
     columns={[
-        'id', 'title', 'slug', 'ISBN_10', 'contact_no',
+        'title',
         'contact_name', 'contact_number',
-        'address_line_1', 'address_line_2',
-        'address_line_3', 'pincode',
+        'address_line_1','pincode',
         'city', 'state', 'country',
-        'created_at', 'updated_at'
+        'created_at',
     ]}
     actionUrls={actionUrls}
 />

@@ -13,7 +13,7 @@ use Illuminate\Validation\ValidationException;
 use Inertia\Inertia;
 use Inertia\Response;
 
-class BooksController extends Controller
+class AddressController extends Controller
 {
     /**
      * Display the user's profile form.
@@ -21,10 +21,10 @@ class BooksController extends Controller
     public function list(Request $request): Response
     {
         try {
-            $books = Book::all();
+            $books = Address::all();
             // dd($books);
 
-            return Inertia::render('be/Books/List', [
+            return Inertia::render('be/Address/List', [
                 'user'       => $request->user(),
                 'pageTitle'  => 'Address List',
                 'pageDescription' => 'A list of all the addresses.',
@@ -40,13 +40,15 @@ class BooksController extends Controller
      */
     public function create(Request $request): Response
     {
+
+        
         try {
-            return Inertia::render('be/Books/Form', [
+            return Inertia::render('be/Address/Form', [
                 'user' => $request->user(),
                 'pageTitle' => 'Create Address',
                 'pageDescription' => '',
                 'pageData' => null,
-                'formUrl' => route('dashboard.be.books.storeUpdate')
+                'formUrl' => route('dashboard.be.address.storeUpdate')
             ]);
         }catch (Exception $exception){
             dd($exception);
@@ -60,12 +62,12 @@ class BooksController extends Controller
     {
         try {
             $getBookInfo = Address::where('id',operator: $bookId)->first();
-            return Inertia::render('be/Books/Form', [
+            return Inertia::render('be/Address/Form', [
                 'user' => $request->user(),
                 'pageTitle' => 'Edit Address',
                 'pageDescription' => '',
                 'pageData' => $getBookInfo,
-                'formUrl' => route('dashboard.be.books.storeUpdate',$bookId)
+                'formUrl' => route('dashboard.be.address.storeUpdate',$bookId)
             ]);
         }catch (Exception $exception){
             dd($exception);
@@ -96,10 +98,10 @@ class BooksController extends Controller
         ]);
 
         // Use updateOrCreate properly
-        Book::updateOrCreate(
+        Address::updateOrCreate(
             [
                 'title' => $request->title,
-                'slug'  => Str::slug($request->title),
+                // 'slug'  => Str::slug($request->title),
             ],
             [
                 'contact_name'  => $request->contact_name,
@@ -116,7 +118,7 @@ class BooksController extends Controller
             ]
         );
 
-        return redirect()->route('dashboard.be.books.list');
+        return redirect()->route('dashboard.be.address.list');
     }
 
     /**
@@ -125,6 +127,6 @@ class BooksController extends Controller
     public function remove($book_id): RedirectResponse
     {
         Address::where('id',$book_id)->delete();
-        return redirect()->route('dashboard.be.books.list');
+        return redirect()->route('dashboard.be.address.list');
     }
 }

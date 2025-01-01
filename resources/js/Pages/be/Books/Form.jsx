@@ -228,7 +228,7 @@ export default function Form({auth, pageTitle, pageDescription, pageData, formUr
                     </div>
 
                     <div className="flex items-center justify-end align-middle gap-2 pt-3 border-t">
-                        <Link href={route('dashboard.be.books.list')} className="inline-flex items-center gap-x-1.5 rounded-md bg-gray-600 px-2.5 py-1.5 text-sm font-semibold text-white shadow-sm hover:bg-gray-500">
+                        <Link href={route('dashboard.be.address.list')} className="inline-flex items-center gap-x-1.5 rounded-md bg-gray-600 px-2.5 py-1.5 text-sm font-semibold text-white shadow-sm hover:bg-gray-500">
                             <XCircleIcon className="-mr-0.5 h-5 w-5" aria-hidden="true" />
                             Cancel
                         </Link>

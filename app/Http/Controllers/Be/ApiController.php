@@ -3,13 +3,11 @@
 namespace App\Http\Controllers\Be;
 
 use App\Http\Controllers\Controller;
-use App\Http\Resources\BookResource;
-use App\Http\Resources\BookReviewResource;
+use App\Http\Resources\AddressResource;
 use App\Http\Resources\PermissionResource;
 use App\Http\Resources\RoleResource;
 use App\Http\Resources\UserResource;
-use App\Models\Book;
-use App\Models\BookReview;
+use App\Models\Address;
 use App\Models\Permission;
 use App\Models\Role;
 use App\Models\User;
@@ -97,9 +95,9 @@ class ApiController extends Controller
     /**
      * Display the books list.
      */
-    public function books(Request $request): AnonymousResourceCollection
+    public function addresses(Request $request): AnonymousResourceCollection
     {
-        $sortFields = ['id','title', 'slug', 'ISBN_10', 'ISBN_13', 'contact_name', 'contact_number',
+        $sortFields = ['id','title',  'contact_name', 'contact_number',
         'address_line_1',
         'address_line_2',
         'address_line_3',
@@ -108,7 +106,7 @@ class ApiController extends Controller
         'state',
         'country',
         'is_default_from',
-        'is_default_to', 'author', 'created_by', 'created_at', 'updated_at'];
+        'is_default_to', 'created_by', 'created_at', 'updated_at'];
         $PER_PAGE           = 10;
         $DEFAULT_SORT_FIELD = 'created_at';
         $DEFAULT_SORT_ORDER = 'desc';
@@ -116,19 +114,17 @@ class ApiController extends Controller
         $sortField      = in_array($sortFieldInput, $sortFields) ? $sortFieldInput : $DEFAULT_SORT_ORDER;
         $sortOrder      = $request->input('sort_order', $DEFAULT_SORT_ORDER);
         $searchInput    = $request->input('search');
-        $query          = Book::orderBy($sortField, $sortOrder);
+        $query          = Address::orderBy($sortField, $sortOrder);
         $perPage        = $request->input('per_page') ?? $PER_PAGE;
         if (!is_null($searchInput)) {
             $searchQuery = "%$searchInput%";
             $query       = $query->where('title', 'like', $searchQuery)
-                ->orWhere('slug', 'like', $searchQuery)
-                ->orWhere('ISBN_10', 'like', $searchQuery)
-                ->orWhere('ISBN_13', 'like', $searchQuery)
+                ->orWhere('city', 'like', $searchQuery)
                 ->orWhere('contact_name', 'like', $searchQuery)
-                ->orWhere('contact_number', 'like', $searchQuery)
-                ->orWhere('author', 'like', $searchQuery);
+                ->orWhere('contact_number', 'like', $searchQuery);
+            
         }
-        return BookResource::collection($query->paginate((int)$perPage));
+        return AddressResource::collection($query->paginate((int)$perPage));
     }
     /**
      * Display the book reviews list.
