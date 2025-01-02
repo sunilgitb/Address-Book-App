@@ -122,7 +122,7 @@ class ApiController extends Controller
                 ->orWhere('city', 'like', $searchQuery)
                 ->orWhere('contact_name', 'like', $searchQuery)
                 ->orWhere('contact_number', 'like', $searchQuery);
-            
+
         }
         return AddressResource::collection($query->paginate((int)$perPage));
     }
@@ -130,5 +130,71 @@ class ApiController extends Controller
      * Display the book reviews list.
      */
 
+     public function store(Request $request)
+    {
 
+        // return $request->all();
+        $request->validate([
+            'title' => 'required|string|max:255',
+            'contact_name' => 'required|string|max:255',
+            'contact_number' => 'required|string|max:15',
+            'address_line_1' => 'required|string|max:255',
+            'address_line_2' => 'nullable|string|max:255',
+            'address_line_3' => 'nullable|string|max:255',
+            'pincode' => 'required|string|max:10',
+            'city' => 'required|string|max:100',
+            'state' => 'required|string|max:100',
+            'country' => 'required|string|max:100',
+            'is_default_from' => 'boolean',
+            'is_default_to' => 'boolean',
+        ]);
+
+        $address = Address::create($request->all());
+        return response()->json(data: $address, status: 201);
+    }
+
+    // Retrieve all addresses
+    public function index()
+    {
+        return Address::all();
+    }
+
+    // Retrieve a specific address
+    public function show($id)
+    {
+        $address = Address::findOrFail($id);
+        return response()->json($address);
+    }
+
+    // Update a specific address
+    public function update(Request $request, $id)
+    {
+        $request->validate([
+            'user_id' => 'integer',
+            'title' => 'string|max:255',
+            'contact_name' => 'string|max:255',
+            'contact_number' => 'string|max:15',
+            'address_line_1' => 'string|max:255',
+            'address_line_2' => 'nullable|string|max:255',
+            'address_line_3' => 'nullable|string|max:255',
+            'pincode' => 'string|max:10',
+            'city' => 'string|max:100',
+            'state' => 'string|max:100',
+            'country' => 'string|max:100',
+            'is_default_from' => 'boolean',
+            'is_default_to' => 'boolean',
+        ]);
+
+        $address = Address::findOrFail($id);
+        $address->update($request->all());
+        return response()->json($address);
+    }
+
+    // Delete a specific address
+    public function destroy($id)
+    {
+        $address = Address::findOrFail($id);
+        $address->delete();
+        return response()->json(null, 204);
+    }
 }

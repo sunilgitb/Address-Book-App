@@ -32,7 +32,7 @@ Route::group([
     Route::get('/addresses', [ApiController::class, 'addresses'])->name('addresses');
     Route::get('/bookReviews', [ApiController::class, 'bookReviews'])->name('bookReviews');
 });
-    
+
 Route::group([
     'as' => 'client.',
     'prefix' => 'client'
@@ -55,4 +55,14 @@ Route::group([
 
     Route::post('/createBook', [ClientApiController::class, 'createBook'])->name('createBook');
     Route::post('/createBookReview', [ClientApiController::class, 'createBookReview'])->name('createBookReview');
+});
+
+
+
+Route::prefix('addresses')->group(function () {
+    Route::get('/', [ApiController::class, 'index']);
+    Route::post('/save', [ApiController::class, 'store']);
+    Route::get('/{id}', [ApiController::class, 'show']);
+    Route::put('/{id}', [ApiController::class, 'update']);
+    Route::delete('/{id}', [ApiController::class, 'destroy']);
 });
